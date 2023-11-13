@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  users:
+    container_name: "users"
+    ports:
+      - "8081:8081"
+    build:
+      context: .
+      dockerfile: cmd/users/Dockerfile
+    volumes:
+      - ./cmd/users/config.yaml:/cmd/users/config.yaml:ro
+
+  weather:
+    container_name: "weather"
+    ports:
+      - "8083:8083"
+    build:
+      context: .
+      dockerfile: cmd/weather/Dockerfile
+    volumes:
+      - ./cmd/weather/config.yaml:/cmd/weather/config.yaml:ro
+  users-postgres:
+    container_name: "users-postgres"
+    image: postgres:15.2
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "dev"
+      POSTGRES_PASSWORD: "12345"
+      POSTGRES_DB: "users"
+
+  weather-postgres:
+    container_name: "weather-postgres"
+    image: postgres:15.2
+    ports:
+      - "5431:5432"
+    environment:
+      POSTGRES_USER: "dev"
+      POSTGRES_PASSWORD: "12345"
+      POSTGRES_DB: "weather"
+
+  traefik:
+    image: traefik:v2.5
+    command:
+      - "--api.insecure=true" # Enable insecure API for dashboard (remove in production)
+      - "--providers.file.filename=/etc/traefik/traefik.yml"
+    ports:
+      - "8888:8888" # Traefik dashboard port
+    volumes:
+      - ./traefik.yml:/etc/traefik/traefik.yml
+      - ./endpoints.yml:/etc/traefik/endpoints.yml

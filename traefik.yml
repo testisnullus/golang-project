@@ -1,0 +1,10 @@
+api:
+  insecure: true
+
+entryPoints:
+  web:
+    address: ":8888"
+
+providers:
+  file:
+    filename: ./etc/traefik/endpoints.yml

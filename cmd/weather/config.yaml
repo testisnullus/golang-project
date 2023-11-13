@@ -1,0 +1,11 @@
+serverPort: ":8083"
+
+config:
+  port: "5432"
+  host: "weather-postgres"
+  username: "dev"
+  password: "12345"
+  dbName: "weather"
+  sslmode: "disable"
+
+apiKey: ""

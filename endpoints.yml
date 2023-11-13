@@ -1,0 +1,26 @@
+http:
+  routers:
+    now:
+      rule: "Path(`/api/forecast/now`)"
+      service: weather
+    history:
+      rule: "Path(`/api/forecast/history`)"
+      service: weather
+    signUp:
+      rule: "Path(`/signUp`)"
+      service: users
+    login:
+      rule: "Path(`/login`)"
+      service: users
+
+
+  services:
+    users:
+      loadBalancer:
+        servers:
+          - url: "http://users:8081"
+
+    weather:
+      loadBalancer:
+        servers:
+          - url: "http://weather:8083"

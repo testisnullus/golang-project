@@ -1,0 +1,13 @@
+serverPort: ":8081"
+
+config:
+  port: "5432"
+  host: "users-postgres"
+  username: "dev"
+  password: "12345"
+  dbName: "users"
+  sslmode: "disable"
+
+jwt:
+  hmacSecret: "12345"
+  lifetime: "720h"
